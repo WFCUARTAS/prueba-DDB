@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\PruebaBig_WIllianCuartas.props" />
+</Project>

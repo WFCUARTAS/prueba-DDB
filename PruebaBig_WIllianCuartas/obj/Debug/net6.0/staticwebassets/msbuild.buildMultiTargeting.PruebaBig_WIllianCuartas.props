@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PruebaBig_WIllianCuartas.props" />
+</Project>
