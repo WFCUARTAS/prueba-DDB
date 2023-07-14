@@ -82,6 +82,8 @@ END
 EXEC SP_GetForecast
     @Id=1
 
+/****************************CONSULTAS**********************/
+
 /*CONSULTAR POR FECHA */
 CREATE OR ALTER PROCEDURE SP_ListDateForecast
     @DateClima DATE
