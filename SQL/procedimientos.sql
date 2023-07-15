@@ -124,3 +124,21 @@ END
 EXEC SP_ListCityDateForecast
     @IdCity = 1,
 	@DateClima = '2023-07-17'
+
+
+/*************************PROCEDIMIENTOS PARA LA CIUDAD***************************/
+
+CREATE OR ALTER PROCEDURE SP_PostCity
+    @Name VARCHAR(50),
+    @Departament VARCHAR(50)
+AS
+BEGIN
+    INSERT INTO cities(Name, Departament)
+    VALUES (@Name , @Departament)
+END
+
+EXEC SP_PostCity
+    @Name = 'Ibague',
+	@Departament = 'Tolima'
+
+select * from cities
