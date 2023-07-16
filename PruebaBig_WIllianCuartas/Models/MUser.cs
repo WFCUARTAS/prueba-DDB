@@ -6,7 +6,7 @@
         public string? Email { get; set; } = null;
         public string? Password { get; set; }= null;
         public string? FullName { get; set; }
-        public bool User_Admin { get; set; }
+        public string? UserRol { get; set; }
         public string? token { get; set; }
     }
 }

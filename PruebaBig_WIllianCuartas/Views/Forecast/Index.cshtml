@@ -3,6 +3,7 @@
     var DateNow=ViewBag.DateNow;
     List<MCity> DataCity = ViewBag.City;
     var message = ViewBag.message;
+    Boolean IsAdmin = ViewBag.IsAdmin;
 }
 
 @if (TempData["Message"] != null)
@@ -13,29 +14,30 @@
 }
 
 
+@if (IsAdmin){
+    <p>
+        <form asp-action="Register">
+            <div class="form-group">
+                <label  class="control-label">ingrese la fecha</label>
+                <input type="date" id="start" name="DateClima"
+                value="@DateNow.ToString("yyyy-MM-dd")"
+                min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
 
-<p>
-    <form asp-action="Register">
-        <div class="form-group">
-            <label  class="control-label">ingrese la fecha</label>
-            <input type="date" id="start" name="DateClima"
-                   value="@DateNow.ToString("yyyy-MM-dd")"
-                   min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
+                <select name="IdCity">
+                    @foreach (var item in DataCity)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }       
+                </select>
 
-            <select name="IdCity">
-                @foreach (var item in DataCity)
-                {
-                    <option value="@item.Id">@item.Name</option>
-                }       
-            </select>
+                <button type="submit" class="btn btn-success">
+                    Registrar Clima <i class="bi bi-plus-circle"></i>
+                </button>
+            </div>
 
-            <button type="submit" class="btn btn-success">
-                Registrar Clima <i class="bi bi-plus-circle"></i>
-            </button>
-        </div>
-        
-    </form>
-</p>
+        </form>
+    </p>
+}
 
 <h1>
     Hola este es el clima del dia @DateNow.ToString("dd-MM-yyyy")
@@ -65,11 +67,14 @@
 
                 <p>Probabilidad de lluvia: @modelo.RainProbability %</p>
                 <p>Informacion adicional:<br> @modelo.Observation</p>
-                    
-            </div>
-                <div class="card-footer d-flex justify-content-end">
-                    <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-info">Editar</a>
-            </div>
+                </div>
+
+                @if (IsAdmin)
+                {
+                    <div class="card-footer d-flex justify-content-end">
+                        <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-info">Editar</a>
+                    </div>
+                }
         </div>
     </div>
 }

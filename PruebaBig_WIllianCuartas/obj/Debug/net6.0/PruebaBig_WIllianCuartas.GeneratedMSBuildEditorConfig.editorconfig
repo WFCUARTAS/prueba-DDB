@@ -16,8 +16,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/WILLIAN CUARTAS/Desktop/prueba-DDB/PruebaBig_WIllianCuartas/Views/Autenticacion/login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2lvblxsb2dpbi5jc2h0bWw=
+[C:/Users/WILLIAN CUARTAS/Desktop/prueba-DDB/PruebaBig_WIllianCuartas/Views/Autentication/login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhdGlvblxsb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/WILLIAN CUARTAS/Desktop/prueba-DDB/PruebaBig_WIllianCuartas/Views/Forecast/Index.cshtml]

@@ -8,16 +8,19 @@ using Dapper;
 using System.Data;
 using System.Runtime.InteropServices;
 using System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace PruebaBig_WIllianCuartas.Apis
 {
     [ApiController]
     [Route("api/Forecast")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ApiForecast : Controller
     {
         Connectiondb cn = new Connectiondb();
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<MForecast>> GetForecast(int id)
         {
             string _connectionString = cn.cadenaSQL();
@@ -34,6 +37,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task PostForecast([FromBody] MForecast parametros)
         {
 
@@ -55,6 +59,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task PutForecast(int id,[FromBody] MForecast parametros)
         {
 
@@ -78,6 +83,7 @@ namespace PruebaBig_WIllianCuartas.Apis
 
         [HttpGet]
         [Route("GetByDate/{Date}")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<MForecast>>> GetCityForecast(DateTime Date)
         {
             string _connectionString = cn.cadenaSQL();
@@ -95,6 +101,7 @@ namespace PruebaBig_WIllianCuartas.Apis
 
         [HttpPost]
         [Route("GetByCityDate")]
+        [AllowAnonymous]
         public async Task<ActionResult<MForecast>> GetCityDateForecast([FromBody] MForecast Forecast)
         {
             string _connectionString = cn.cadenaSQL();

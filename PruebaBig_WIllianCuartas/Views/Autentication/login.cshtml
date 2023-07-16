@@ -1,6 +1,13 @@
 ﻿@model PruebaBig_WIllianCuartas.Models.MUser
 
-<form method="post" asp-action="login" asp-controller="Autenticacion">
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["Message_type"]">
+        @TempData["Message"]
+    </div>
+}
+
+<form method="post" asp-action="login" asp-controller="Autentication">
 
     <h1>
         Login de usuario

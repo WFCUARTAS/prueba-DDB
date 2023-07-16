@@ -19,6 +19,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         Connectiondb cn = new Connectiondb();
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<List<MCity>>> GetForecast()
         {
             string _connectionString = cn.cadenaSQL();
@@ -31,6 +32,8 @@ namespace PruebaBig_WIllianCuartas.Apis
         }
 
         [HttpPost]
+
+        [Authorize(Roles = "Admin")]
         public async Task PostForecast([FromBody] MCity parametros)
         {
 

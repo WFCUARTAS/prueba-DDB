@@ -1,11 +1,12 @@
 use PruebaBig_WillianFerneyCuartasMesa
 
+
 create table users(
 	Id int IDENTITY(1,1) PRIMARY KEY,
 	Email varchar(50) not null unique,
-	Password varchar(50) not null,
+	Password VARBINARY(128) not null,
 	FullName varchar(50) not null,
-	User_Admin bit not null 
+	UserRol varchar(10) not null
 )
 
 create table cities(

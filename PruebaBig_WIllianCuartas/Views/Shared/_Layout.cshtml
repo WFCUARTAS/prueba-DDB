@@ -1,4 +1,13 @@
-﻿
+﻿@using System.Security.Claims;
+@{
+    var identity = Context.User.Identity as ClaimsIdentity;
+    string UserName = "";
+    if (identity != null)
+    {
+        UserName = identity.FindFirst(ClaimTypes.Name)?.Value;
+ 
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +34,16 @@
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @Context.Session.GetString("JwtToken")
+                            <h4>-@UserName-</h4>
                                                         
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Autenticacion" asp-action="exit">Salir</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Autentication" asp-action="exit">Salir</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Autentication" asp-action="login">Iniciar sesion</a>
                             </li>
                         }
                     </ul>

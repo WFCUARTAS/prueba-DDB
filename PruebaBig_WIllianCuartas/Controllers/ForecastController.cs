@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using PruebaBig_WIllianCuartas.Models;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 using System.Xml.Linq;
+using static Dapper.SqlMapper;
 
 namespace PruebaBig_WIllianCuartas.Controllers
 {
@@ -19,49 +22,79 @@ namespace PruebaBig_WIllianCuartas.Controllers
 
         private readonly string ApiUrl;
         private readonly HttpClient httpClient;
-        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJtYWlsQG1haWwuY29tIiwibmJmIjoxNjg5NDk0ODYxLCJleHAiOjE2ODk0OTg0NjEsImlhdCI6MTY4OTQ5NDg2MX0.AkXEvCu8rOLtjRkLS9t4LL9paeM945ZpbybNUrjUl10";
+        private string token;
+
+
         public ForecastController(IConfiguration config)
         {
             ApiUrl = config.GetSection("ApiUrl").Value;
             httpClient = new HttpClient();
+
         }
 
         // GET: ForecastController
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
-            // Agregar el token de autorización al encabezado
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            Boolean IsAdmin = false;
+            //validar si se inicio secion 
+            ClaimsPrincipal c = HttpContext.User;
+            if (c.Identity != null)
+            {
+                if (c.Identity.IsAuthenticated)
+                {
+                    var identity = User.Identity as ClaimsIdentity;
+                    if (identity.FindFirst(ClaimTypes.Role)?.Value=="Admin")
+                    {
+                        IsAdmin = true;
+                    }
+                }
+            }
+             
 
-            // Enviar solicitud GET al API y recibir la respuesta
             HttpResponseMessage responseForecast = await httpClient.GetAsync(ApiUrl+ "api/Forecast/GetByDate/"+ DateTime.Now.ToString("yyyy-MM-dd"));
-            // Leer el contenido de la respuesta como una cadena JSON
+            if (responseForecast.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("exit", "Autentication");
+            }
+
             string jsonContentForecast = await responseForecast.Content.ReadAsStringAsync();
-            // Deserializar la cadena JSON a objetos C#
             var DataForecast = JsonConvert.DeserializeObject<List<MForecast>>(jsonContentForecast);
 
 
-            // Enviar solicitud GET al API y recibir la respuesta
+            // llamar API para obtener las ciudades
             HttpResponseMessage responseCity = await httpClient.GetAsync(ApiUrl + "api/City");
-            // Leer el contenido de la respuesta como una cadena JSON
+            if (responseCity.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("exit", "Autentication");
+            }
+            
             string jsonContentCity = await responseCity.Content.ReadAsStringAsync();
-            // Deserializar la cadena JSON a objetos C#
             var DataCity = JsonConvert.DeserializeObject<List<MCity>>(jsonContentCity);
 
 
             ViewBag.DateNow = DateTime.Now;
+            ViewBag.IsAdmin = IsAdmin;
             ViewBag.City = DataCity;
             return View(DataForecast);
         }
 
         // GET: ForecastController
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int id)
         {
+            var identity = User.Identity as ClaimsIdentity;
+            token = identity.FindFirst("token")?.Value;
 
-            // Enviar solicitud GET al API y recibir la respuesta
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             HttpResponseMessage responseForecast = await httpClient.GetAsync(ApiUrl + "api/Forecast/" + id);
-            // Leer el contenido de la respuesta como una cadena JSON
+            if (responseForecast.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("exit", "Autentication");
+            }
+
             string jsonContentForecast = await responseForecast.Content.ReadAsStringAsync();
-            // Deserializar la cadena JSON a objetos C#
             var DataForecast = JsonConvert.DeserializeObject<MForecast>(jsonContentForecast);
 
 
@@ -71,24 +104,32 @@ namespace PruebaBig_WIllianCuartas.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         // POST: ForecastController/Register
         public async Task<ActionResult> Register(MForecast Forecast)
         {
-            // Crear un objeto con los parámetros en formato JSON
+            var identity = User.Identity as ClaimsIdentity;
+            token = identity.FindFirst("token")?.Value;
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             var parametros = new
             {
                 IdCity = Forecast.IdCity.ToString(),
                 DateClima = Forecast.DateClima.ToString("yyyy-MM-dd")
             };
-            // Serializar el objeto a JSON
+            
             var json = JsonConvert.SerializeObject(parametros);
             var contenido = new StringContent(json, Encoding.UTF8, "application/json");
 
-            // Enviar solicitud GET al API y recibir la respuesta
+            
             HttpResponseMessage responseForecast = await httpClient.PostAsync(ApiUrl + "api/Forecast/GetByCityDate/", contenido);
-            // Leer el contenido de la respuesta como una cadena JSON
+            if (responseForecast.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("exit", "Autentication");
+            }
+
             string jsonContentForecast = await responseForecast.Content.ReadAsStringAsync();
-            // Deserializar la cadena JSON a objetos C#
             var DataForecast = JsonConvert.DeserializeObject<MForecast>(jsonContentForecast);
             if (DataForecast == null)
             {
@@ -107,15 +148,20 @@ namespace PruebaBig_WIllianCuartas.Controllers
 
         // POST: ForecastController/Save
         [HttpPost]
-         public async Task<ActionResult> Save(MForecast Forecast)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Save(MForecast Forecast)
         {
+            var identity = User.Identity as ClaimsIdentity;
+            token = identity.FindFirst("token")?.Value;
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             // Serializar el objeto a JSON
             var json = JsonConvert.SerializeObject(Forecast);
             var contenido = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage responseForecast;
-            // validar el id: si es nullo se envia post (insertar) si no es nullo enviar PUT
+            
             if (Forecast.Id == null)
             {
                 responseForecast = await httpClient.PostAsync(ApiUrl + "api/Forecast/", contenido);
@@ -125,12 +171,16 @@ namespace PruebaBig_WIllianCuartas.Controllers
                 responseForecast = await httpClient.PutAsync(ApiUrl + "api/Forecast/"+ Forecast.Id, contenido);
             }
             
-            // Validar que si funciono el codigo
+            
             if (responseForecast.IsSuccessStatusCode)
             {
                 TempData["Message"] = "Registrado con exito";
                 TempData["Message_type"] = "success";
                 return RedirectToAction(nameof(Index));
+            }
+            else if (responseForecast.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return RedirectToAction("exit", "Autentication");
             }
             else
             {
@@ -138,13 +188,7 @@ namespace PruebaBig_WIllianCuartas.Controllers
                 TempData["Message_type"] = "danger";
                 return RedirectToAction(nameof(Index));
             }
-
-            
-            
         }
-
-
-        
 
 
     }

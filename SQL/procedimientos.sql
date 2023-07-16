@@ -1,3 +1,5 @@
+use PruebaBig_WillianFerneyCuartasMesa
+
 CREATE OR ALTER PROCEDURE SP_PostForecast
     @Title VARCHAR(50),
     @DateClima DATE,
@@ -143,3 +145,72 @@ EXEC SP_PostCity
 	@Departament = 'Tolima'
 
 select * from cities
+
+/*************************PROCEDIMIENTOS PARA USUARIOS***************************/
+/*Metodo get**/
+CREATE OR ALTER PROCEDURE SP_GetUser
+    @Email VARCHAR(50)
+AS
+BEGIN
+    SELECT Id, Email, FullName, User_Admin
+        FROM users
+        WHERE Email = @Email;
+END
+
+EXEC SP_GetUser
+    @Email = 'admin@mail.com'
+
+//*Metodo post*//
+CREATE OR ALTER PROCEDURE SP_PostUser
+    @Email VARCHAR(50),
+    @Password VARCHAR(50),
+	@FullName VARCHAR(50),
+	@UserRol VARCHAR(10)
+AS
+BEGIN
+    INSERT INTO users(Email, Password, FullName, UserRol)
+    VALUES (@Email, HASHBYTES('SHA2_512', @Password), @FullName, @UserRol)
+END
+
+EXEC SP_PostUser
+    @Email = 'user1@mail.com',
+    @Password = '6789',
+	@FullName = 'Wferney mesa',
+	@UserRol = 'User' 
+
+
+/*Procedimiento para validar usuario*/
+CREATE OR ALTER PROCEDURE SP_ValidateUser
+    @Email VARCHAR(50),
+    @Password VARCHAR(50)
+AS
+BEGIN
+    
+	DECLARE @PasswordHash VARBINARY(128);
+	SET @PasswordHash = HASHBYTES('SHA2_512', @Password);
+
+	IF EXISTS (
+        SELECT *
+        FROM users
+        WHERE Email = @Email AND Password = @PasswordHash
+    )
+    BEGIN
+        -- Usuario y contraseña válidos, retornar el registro del usuario
+        SELECT Id, Email, FullName, User_Admin
+        FROM users
+        WHERE Email = @Email;
+    END
+    ELSE
+    BEGIN
+        -- Usuario o contraseña incorrectos, retornar mensaje de error
+        RAISERROR('Usuario o contraseña incorrectos.', 16, 1);
+    END
+
+END
+
+EXEC SP_ValidateUser
+    @Email = 'admin@mail.com',
+    @Password = '1234'
+
+
+	select 

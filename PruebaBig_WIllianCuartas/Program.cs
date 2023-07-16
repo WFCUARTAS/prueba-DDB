@@ -13,7 +13,8 @@ var keyByte = Encoding.UTF8.GetBytes(secretkey);
 builder.Services.AddAuthentication()
     .AddCookie(option =>
     {
-        option.LoginPath = "/Autenticacion/login/";
+        option.LoginPath = "/Autentication/login/";
+
     })
     .AddJwtBearer(config =>
     {
