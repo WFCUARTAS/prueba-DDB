@@ -77,3 +77,11 @@ C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\obj\Debug\n
 C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\obj\Debug\net6.0\PruebaBig_WIllianCuartas.genruntimeconfig.cache
 C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\obj\Debug\net6.0\ref\PruebaBig_WIllianCuartas.dll
 C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\WILLIAN CUARTAS\Desktop\prueba-DDB\PruebaBig_WIllianCuartas\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

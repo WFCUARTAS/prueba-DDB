@@ -1,0 +1,22 @@
+﻿@model PruebaBig_WIllianCuartas.Models.MUser
+
+<form method="post" asp-action="login" asp-controller="Autenticacion">
+
+    <h1>
+        Login de usuario
+    </h1>
+
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="text" class="form-control" id="Email" name="Email" value="@Model.Email" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Contraseña:</label>
+        <input type="password" class="form-control" id="Password" name="Password" value="@Model.Password" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">iniciar</button>
+
+</form>

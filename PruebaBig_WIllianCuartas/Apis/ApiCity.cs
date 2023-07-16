@@ -5,11 +5,14 @@ using PruebaBig_WIllianCuartas.Models;
 using System.Data.SqlClient;
 using System.Data;
 using Dapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace PruebaBig_WIllianCuartas.Apis
 {
     [ApiController]
     [Route("api/City")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ApiCity : ControllerBase
     {
 

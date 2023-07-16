@@ -124,7 +124,7 @@ END
 
 EXEC SP_ListCityDateForecast
     @IdCity = 1,
-	@DateClima = '2023-07-17'
+	@DateClima = '2023-07-15'
 
 
 /*************************PROCEDIMIENTOS PARA LA CIUDAD***************************/

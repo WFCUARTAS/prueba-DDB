@@ -1,19 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using PruebaBig_WIllianCuartas.Models;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
 
 namespace PruebaBig_WIllianCuartas.Controllers
 {
-
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class ForecastController : Controller
     {
 
         private readonly string ApiUrl;
         private readonly HttpClient httpClient;
+        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJtYWlsQG1haWwuY29tIiwibmJmIjoxNjg5NDk0ODYxLCJleHAiOjE2ODk0OTg0NjEsImlhdCI6MTY4OTQ5NDg2MX0.AkXEvCu8rOLtjRkLS9t4LL9paeM945ZpbybNUrjUl10";
         public ForecastController(IConfiguration config)
         {
             ApiUrl = config.GetSection("ApiUrl").Value;
@@ -23,6 +29,8 @@ namespace PruebaBig_WIllianCuartas.Controllers
         // GET: ForecastController
         public async Task<ActionResult> Index()
         {
+            // Agregar el token de autorización al encabezado
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             // Enviar solicitud GET al API y recibir la respuesta
             HttpResponseMessage responseForecast = await httpClient.GetAsync(ApiUrl+ "api/Forecast/GetByDate/"+ DateTime.Now.ToString("yyyy-MM-dd"));
