@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "aJdx0haV6id+jkwoTNKXayFWRytNDRCjSRdp6aAdD672tnfIHW7wgyqnOMDdM6ODGIHg8Mm6h7HuQTv0pEdNgg==",
+  "dgSpecHash": "ktFLcMiIRt4nw63fmoTefbZK6qy8tHXjjkYFzDMKE4/Us6FQ9olmK6xLhzq90pJC1NcvQFWMVZBasmPOTqsz4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
+  "projectFilePath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\dapper\\2.0.143\\dapper.2.0.143.nupkg.sha512",
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

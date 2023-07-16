@@ -20,7 +20,7 @@ create table forecasts(
 	DateClima date not null,
 	MinTemperature int not null,
 	MaxTemperature int not null,
-	RainProbability float not null,
+	RainProbability int not null,
 	Observation varchar(200),
 	IdCity int,
 	IdUserChage int not null,

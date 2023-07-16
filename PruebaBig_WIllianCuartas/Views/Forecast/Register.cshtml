@@ -1,0 +1,52 @@
+﻿@model PruebaBig_WIllianCuartas.Models.MForecast
+@{
+    var DateNow = ViewBag.DateNow;
+}
+
+@if(Model.Id==null){
+<h1>
+    registrar pronostico del Clima
+</h1>
+}
+else{
+<h1>
+    Editar pronostico del Clima
+</h1>
+}
+
+Id : @Model.Id
+<br />
+ciudad : @Model.CityName
+<br />
+fecha: @Model.DateClima
+
+<form method="post" asp-action="Save">
+
+    <input hidden type="number" class="form-control" id="Id" name="Id" value="@Model.Id" />
+    <input hidden type="number" class="form-control" id="IdCity" name="IdCity" value="@Model.IdCity" />
+    <input hidden type="date" class="form-control" id="DateClima" name="DateClima" value="@Model.DateClima.ToString("yyyy-MM-dd")" />
+
+    <div class="form-group">
+        <label for="Title">Título del pronostico</label>
+        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required/>
+    </div>
+
+    <div class="form-group">
+        <label for="MinTemperature">Temperatura Mínima (°C):</label>
+        <input type="number" class="form-control" id="MinTemperature" name="MinTemperature" value="@Model.MinTemperature" required />
+    </div>
+    <div class="form-group">
+        <label for="MaxTemperature">Temperatura Máxima (°C):</label>
+        <input type="number" class="form-control" id="MaxTemperature" name="MaxTemperature" value="@Model.MaxTemperature" required />
+    </div>
+    <div class="form-group">
+        <label for="RainProbability">Probabilidad de Lluvia (%):</label>
+        <input type="number" min="0" max="100" class="form-control" id="RainProbability" name="RainProbability" value="@Model.RainProbability" required />
+    </div>
+    <div class="form-group">
+        <label for="Observation">Observación:</label>
+        <textarea class="form-control" id="Observation" name="Observation">@Model.Observation</textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

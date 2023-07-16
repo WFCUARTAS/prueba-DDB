@@ -16,7 +16,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         Connectiondb cn = new Connectiondb();
 
         [HttpGet]
-        public async Task<ActionResult<List<MCity>>> GetForecast(int id)
+        public async Task<ActionResult<List<MCity>>> GetForecast()
         {
             string _connectionString = cn.cadenaSQL();
 

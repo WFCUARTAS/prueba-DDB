@@ -1,4 +1,77 @@
-﻿
+﻿@model List<PruebaBig_WIllianCuartas.Models.MForecast>
+@{
+    var DateNow=ViewBag.DateNow;
+    List<MCity> DataCity = ViewBag.City;
+    var message = ViewBag.message;
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-@TempData["Message_type"]">
+        @TempData["Message"]
+    </div>
+}
+
+
+
+<p>
+    <form asp-action="Register">
+        <div class="form-group">
+            <label  class="control-label">ingrese la fecha</label>
+            <input type="date" id="start" name="DateClima"
+                   value="@DateNow.ToString("yyyy-MM-dd")"
+                   min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
+
+            <select name="IdCity">
+                @foreach (var item in DataCity)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }       
+            </select>
+
+            <button type="submit" class="btn btn-success">
+                Registrar Clima <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
+        
+    </form>
+</p>
+
 <h1>
-    Hola este es el index
+    Hola este es el clima del dia @DateNow.ToString("dd-MM-yyyy")
 </h1>
+<div class="card-deck d-flex flex-wrap justify-content-center">
+@foreach (var modelo in Model)
+{
+        <div class="card col-3 mx-2 my-2 rounded shadow car_forecast">
+        <div class="card-body">
+                <h3 class="card-title text-center">@modelo.CityName</h3>
+                <hr>
+            <div class="card-body pt-1">
+                <h5>@modelo.Title</h5>
+                    <table class="text-center mb-2 table-borderless" style="width:80%">
+                    <tr>
+                        <td colspan="2">Temperatura</td>
+                    </tr>
+                    <tr>
+                        <td>Mínima</td>
+                        <td>Máxima</td>
+                    </tr>
+                    <tr>
+                        <td>@modelo.MinTemperature °C</td>
+                        <td>@modelo.MaxTemperature °C</td>
+                    </tr>
+                </table>
+
+                <p>Probabilidad de lluvia: @modelo.RainProbability %</p>
+                <p>Informacion adicional:<br> @modelo.Observation</p>
+                    
+            </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-info">Editar</a>
+            </div>
+        </div>
+    </div>
+}
+</div>
+

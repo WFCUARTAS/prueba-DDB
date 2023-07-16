@@ -89,12 +89,13 @@ CREATE OR ALTER PROCEDURE SP_ListDateForecast
     @DateClima DATE
 AS
 BEGIN
-    SELECT Id, Title, DateClima, MinTemperature, MaxTemperature, RainProbability, Observation, IdCity
-    FROM  forecasts WHERE DateClima = @DateClima
+    SELECT f.Id, f.Title, f.DateClima, f.MinTemperature, f.MaxTemperature, f.RainProbability, f.Observation, f.IdCity, c.Name AS 'CityName' 
+    FROM  forecasts AS f, cities As c WHERE f.IdCity=c.Id AND DateClima = @DateClima
 END
 
 EXEC SP_ListDateForecast
     @DateClima = '2023-07-16'
+
 
 	
 /*CONSULTAR POR Ciudad */
@@ -117,8 +118,8 @@ CREATE OR ALTER PROCEDURE SP_ListCityDateForecast
 	@DateClima DATE
 AS
 BEGIN
-    SELECT Title, DateClima, MinTemperature, MaxTemperature, RainProbability, Observation, IdCity 
-    FROM  forecasts WHERE IdCity = @IdCity AND DateClima = @DateClima
+    SELECT f.Id, f.Title, f.DateClima, f.MinTemperature, f.MaxTemperature, f.RainProbability, f.Observation, f.IdCity, c.Name AS 'CityName'
+    FROM  forecasts AS f, cities As c WHERE f.IdCity=c.Id AND IdCity = @IdCity AND DateClima = @DateClima
 END
 
 EXEC SP_ListCityDateForecast

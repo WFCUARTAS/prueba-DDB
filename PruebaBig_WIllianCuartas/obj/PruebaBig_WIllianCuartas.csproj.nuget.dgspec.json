@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj": {}
+    "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj": {
+    "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
+        "projectUniqueName": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
         "projectName": "PruebaBig_WIllianCuartas",
-        "projectPath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
+        "projectPath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\PruebaBig_WIllianCuartas.csproj",
         "packagesPath": "C:\\Users\\WILLIAN CUARTAS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\DDB\\prueba-DDB\\PruebaBig_WIllianCuartas\\obj\\",
+        "outputPath": "C:\\Users\\WILLIAN CUARTAS\\Desktop\\prueba-DDB\\PruebaBig_WIllianCuartas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\WILLIAN CUARTAS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,6 +43,10 @@
             "Dapper": {
               "target": "Package",
               "version": "[2.0.143, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",
