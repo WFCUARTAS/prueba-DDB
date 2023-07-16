@@ -152,7 +152,7 @@ CREATE OR ALTER PROCEDURE SP_GetUser
     @Email VARCHAR(50)
 AS
 BEGIN
-    SELECT Id, Email, FullName, User_Admin
+    SELECT Id, Email, FullName, UserRol
         FROM users
         WHERE Email = @Email;
 END
@@ -175,7 +175,7 @@ END
 EXEC SP_PostUser
     @Email = 'user1@mail.com',
     @Password = '6789',
-	@FullName = 'Wferney mesa',
+	@FullName = 'Ferney Mesa',
 	@UserRol = 'User' 
 
 
@@ -196,7 +196,7 @@ BEGIN
     )
     BEGIN
         -- Usuario y contraseña válidos, retornar el registro del usuario
-        SELECT Id, Email, FullName, User_Admin
+        SELECT Id, Email, FullName, UserRol
         FROM users
         WHERE Email = @Email;
     END
@@ -205,12 +205,11 @@ BEGIN
         -- Usuario o contraseña incorrectos, retornar mensaje de error
         RAISERROR('Usuario o contraseña incorrectos.', 16, 1);
     END
-
 END
 
 EXEC SP_ValidateUser
     @Email = 'admin@mail.com',
-    @Password = '1234'
+    @Password = '12345'
 
 
-	select 
+	 

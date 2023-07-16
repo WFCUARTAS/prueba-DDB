@@ -9,6 +9,7 @@ using System.Data;
 using System.Runtime.InteropServices;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
 
 namespace PruebaBig_WIllianCuartas.Apis
 {
@@ -40,6 +41,8 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Authorize(Roles = "Admin")]
         public async Task PostForecast([FromBody] MForecast parametros)
         {
+            var identity = User.Identity as ClaimsIdentity;
+            int IdUser = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             string _connectionString = cn.cadenaSQL();
             var db = new SqlConnection(_connectionString);
@@ -53,8 +56,8 @@ namespace PruebaBig_WIllianCuartas.Apis
                 RainProbability =parametros.RainProbability,
                 Observation = parametros.Observation,
                 IdCity =parametros.IdCity,
-                IdUserChange =12
-            }, commandType: CommandType.StoredProcedure);
+                IdUserChange = IdUser
+           }, commandType: CommandType.StoredProcedure);
            
         }
 
@@ -62,6 +65,8 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Authorize(Roles = "Admin")]
         public async Task PutForecast(int id,[FromBody] MForecast parametros)
         {
+            var identity = User.Identity as ClaimsIdentity;
+            int IdUser = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             string _connectionString = cn.cadenaSQL();
             var db = new SqlConnection(_connectionString);
@@ -76,7 +81,7 @@ namespace PruebaBig_WIllianCuartas.Apis
                 RainProbability = parametros.RainProbability,
                 Observation = parametros.Observation,
                 IdCity = parametros.IdCity,
-                IdUserChange = 12
+                IdUserChange = IdUser
             }, commandType: CommandType.StoredProcedure);
 
         }

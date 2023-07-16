@@ -15,8 +15,18 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color:#237f57;
 }
 
 .car_forecast {
     background-color: #aee789;
+}
+
+.car_forecast table {
+    background-color: #92e077;
+}
+
+.btn {
+    background-color: #9bf603;
+    color: black;
 }

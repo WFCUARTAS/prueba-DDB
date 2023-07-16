@@ -40,7 +40,7 @@
 }
 
 <h1>
-    Hola este es el clima del dia @DateNow.ToString("dd-MM-yyyy")
+    Clima de Hoy @DateNow.ToString("dd-MM-yyyy")
 </h1>
 <div class="card-deck d-flex flex-wrap justify-content-center">
 @foreach (var modelo in Model)
@@ -50,8 +50,8 @@
                 <h3 class="card-title text-center">@modelo.CityName</h3>
                 <hr>
             <div class="card-body pt-1">
-                <h5>@modelo.Title</h5>
-                    <table class="text-center mb-2 table-borderless" style="width:80%">
+                <h5 class="text-center">@modelo.Title</h5>
+                    <table class="text-center mx-auto mb-3 table-borderless" style="width:80%">
                     <tr>
                         <td colspan="2">Temperatura</td>
                     </tr>
@@ -72,7 +72,7 @@
                 @if (IsAdmin)
                 {
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-info">Editar</a>
+                        <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-success">Editar</a>
                     </div>
                 }
         </div>

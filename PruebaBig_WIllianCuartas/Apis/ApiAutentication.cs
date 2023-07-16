@@ -41,7 +41,8 @@ namespace PruebaBig_WIllianCuartas.Apis
                 var keyBytes = Encoding.ASCII.GetBytes(secretkey);
                 var claims = new ClaimsIdentity();
 
-                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, User.Email));
+                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, ""+ Result.Id));
+                claims.AddClaim(new Claim(ClaimTypes.Email, User.Email));
                 claims.AddClaim(new Claim(ClaimTypes.Role, Result.UserRol));
 
                 var tokenDescriptor = new SecurityTokenDescriptor
