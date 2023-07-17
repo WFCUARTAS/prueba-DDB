@@ -84,7 +84,6 @@ namespace PruebaBig_WIllianCuartas.Controllers
                 properties.AllowRefresh = true;
                 properties.ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(ci), properties);
-                HttpContext.Session.SetString("JwtToken", token);
 
                 return RedirectToAction("index", "Forecast");
             }

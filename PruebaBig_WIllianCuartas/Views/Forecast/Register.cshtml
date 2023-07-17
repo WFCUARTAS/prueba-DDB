@@ -4,49 +4,57 @@
 }
 
 @if(Model.Id==null){
-<h1>
+<h1 class="text-center">
     registrar pronostico del Clima
 </h1>
 }
 else{
-<h1>
+<h1 class="text-center">
     Editar pronostico del Clima
 </h1>
 }
 
-Id : @Model.Id
-<br />
-ciudad : @Model.CityName
-<br />
-fecha: @Model.DateClima
+<h3 class="text-center">
+    <b>Ciudad</b>: @Model.CityName 
+<br/>
+    <b>Fecha</b>: @Model.DateClima.ToString("dd-MM-yyyy")
+</h3>
 
-<form method="post" asp-action="Save">
+<div class="row">
+    <div class="col-3"></div>
+        <div class="col-6" style="font-size:2rem">
 
-    <input hidden type="number" class="form-control" id="Id" name="Id" value="@Model.Id" />
-    <input hidden type="number" class="form-control" id="IdCity" name="IdCity" value="@Model.IdCity" />
-    <input hidden type="date" class="form-control" id="DateClima" name="DateClima" value="@Model.DateClima.ToString("yyyy-MM-dd")" />
+            <form method="post" asp-action="Save" style="font-size:2rem;">
 
-    <div class="form-group">
-        <label for="Title">Título del pronostico</label>
-        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" required/>
-    </div>
+                <input hidden type="number" class="form-control" id="Id" name="Id" value="@Model.Id" />
+                <input hidden type="number" class="form-control" id="IdCity" name="IdCity" value="@Model.IdCity" />
+                <input hidden type="date" class="form-control" id="DateClima" name="DateClima" value="@Model.DateClima.ToString("yyyy-MM-dd")" />
 
-    <div class="form-group">
-        <label for="MinTemperature">Temperatura Mínima (°C):</label>
-        <input type="number" class="form-control" id="MinTemperature" name="MinTemperature" value="@Model.MinTemperature" required />
-    </div>
-    <div class="form-group">
-        <label for="MaxTemperature">Temperatura Máxima (°C):</label>
-        <input type="number" class="form-control" id="MaxTemperature" name="MaxTemperature" value="@Model.MaxTemperature" required />
-    </div>
-    <div class="form-group">
-        <label for="RainProbability">Probabilidad de Lluvia (%):</label>
-        <input type="number" min="0" max="100" class="form-control" id="RainProbability" name="RainProbability" value="@Model.RainProbability" required />
-    </div>
-    <div class="form-group">
-        <label for="Observation">Observación:</label>
-        <textarea class="form-control" id="Observation" name="Observation">@Model.Observation</textarea>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
+                <div class="form-group">
+                    <label for="Title">Título del pronostico</label>
+                    <input type="text" class="form-control tex" id="Title" name="Title" value="@Model.Title" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="MinTemperature">Temperatura Mínima (°C):</label>
+                            <input type="number" min="0" max="100" class="form-control tex" id="MinTemperature" name="MinTemperature" value="@Model.MinTemperature" required />
+                </div>
+                <div class="form-group">
+                    <label for="MaxTemperature">Temperatura Máxima (°C):</label>
+                            <input type="number" min="0" max="100" class="form-control tex" id="MaxTemperature" name="MaxTemperature" value="@Model.MaxTemperature" required />
+                </div>
+                <div class="form-group">
+                    <label for="RainProbability">Probabilidad de Lluvia (%):</label>
+                            <input type="number" min="0" max="100" class="form-control tex" id="RainProbability" name="RainProbability" value="@Model.RainProbability" required />
+                </div>
+                <div class="form-group">
+                    <label for="Observation">Observación:</label>
+                            <textarea class="form-control tex" id="Observation " name="Observation">@Model.Observation</textarea>
+                </div>
+
+            <button style="font-size:2rem"  type="submit" class="btn btn-success mt-2 px-5">Guardar</button>
+            </form>
+
+        </div>
+    <div class="col-3"></div>
+</div>

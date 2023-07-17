@@ -48,7 +48,7 @@ namespace PruebaBig_WIllianCuartas.Apis
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claims,
-                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Expires = DateTime.UtcNow.AddHours(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };
 

@@ -89,7 +89,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [HttpGet]
         [Route("GetByDate/{Date}")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<MForecast>>> GetCityForecast(DateTime Date)
+        public async Task<ActionResult<List<MForecast>>> GetDateForecast(DateTime Date)
         {
             string _connectionString = cn.cadenaSQL();
 
@@ -104,9 +104,26 @@ namespace PruebaBig_WIllianCuartas.Apis
             return lista.ToList();
         }
 
+        [HttpGet]
+        [Route("GetByCity/{id}")]
+        public async Task<ActionResult<List<MForecast>>> GetCityForecast(int id)
+        {
+            string _connectionString = cn.cadenaSQL();
+
+            var db = new SqlConnection(_connectionString);
+
+            var lista = await db.QueryAsync<MForecast>("SP_ListCityForecast", new
+            {
+                IdCity = id
+
+            }, commandType: CommandType.StoredProcedure);
+
+            return lista.ToList();
+        }
+
+
         [HttpPost]
         [Route("GetByCityDate")]
-        [AllowAnonymous]
         public async Task<ActionResult<MForecast>> GetCityDateForecast([FromBody] MForecast Forecast)
         {
             string _connectionString = cn.cadenaSQL();

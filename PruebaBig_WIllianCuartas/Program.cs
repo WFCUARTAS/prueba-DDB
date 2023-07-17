@@ -36,13 +36,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDistributedMemoryCache();
 
-///para almacenar variables en la secion
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+
 
 var app = builder.Build();
 
@@ -64,7 +58,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

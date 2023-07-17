@@ -4,6 +4,7 @@
     List<MCity> DataCity = ViewBag.City;
     var message = ViewBag.message;
     Boolean IsAdmin = ViewBag.IsAdmin;
+    string title = ViewBag.title;
 }
 
 @if (TempData["Message"] != null)
@@ -14,69 +15,124 @@
 }
 
 
-@if (IsAdmin){
-    <p>
-        <form asp-action="Register">
-            <div class="form-group">
-                <label  class="control-label">ingrese la fecha</label>
-                <input type="date" id="start" name="DateClima"
-                value="@DateNow.ToString("yyyy-MM-dd")"
-                min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
 
-                <select name="IdCity">
-                    @foreach (var item in DataCity)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }       
-                </select>
+<div class="row">
 
-                <button type="submit" class="btn btn-success">
-                    Registrar Clima <i class="bi bi-plus-circle"></i>
-                </button>
+
+@if (User.Identity.IsAuthenticated)
+    {
+    <div class="col-3 pt-5 " style="background-color:#53854d;">
+
+            <h3 class="text-center">Buscar</h3>
+            <br>
+            <div class="row mb-5">
+                <div class="col-12 mx-3 mb-2">
+                    <form asp-action="ListByDate">
+                    <input class="mx-1 tex" type="date" id="start" name="DateClima"
+                           value="@DateNow.ToString("yyyy-MM-dd")"
+                           min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
+
+                    <button type="submit" class="btn btn-success mx-1">
+                            <i class="bi bi-search"></i>
+                    </button>
+                    </form>
+                </div>
+                <div class="col-12 mx-3 my-2">
+                    <form asp-action="ListByCity" method="get">
+                    <select name="IdCity" class="mx-1 tex">
+                        @foreach (var item in DataCity)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-success mx-1">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    </form>
+                </div>
+            </div>
+    @if (IsAdmin){ 
+        <hr>
+        <form asp-action="Register" >
+            <h3 class="text-center">Registrar Clima</h3>
+            <h5 class="mt-4 mx-3">Sleccione fecha y ciudad</h5>
+            <br>
+            <div class="row">
+                <div class="col-12 mx-3 mb-2">
+                <input class="mx-1 tex" type="date" id="start" name="DateClima"
+                       value="@DateNow.ToString("yyyy-MM-dd")"
+                       min="@DateNow.ToString("yyyy-MM-dd")" max="@DateNow.AddYears(1).ToString("yyyy-MM-dd")">
+                </div>
+                <div class="col-12 mx-3 my-2">
+
+                    <select name="IdCity" class="mx-1 tex">
+                        @foreach (var item in DataCity)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-12 mx-3 my-2">
+
+                    <button type="submit" class="btn btn-success mx-1">
+                        Registrar <i class="bi bi-plus-circle"></i>
+                    </button>
+                </div>
+
             </div>
 
         </form>
-    </p>
-}
+    }
 
-<h1>
-    Clima de Hoy @DateNow.ToString("dd-MM-yyyy")
-</h1>
-<div class="card-deck d-flex flex-wrap justify-content-center">
-@foreach (var modelo in Model)
-{
-        <div class="card col-3 mx-2 my-2 rounded shadow car_forecast">
-        <div class="card-body">
-                <h3 class="card-title text-center">@modelo.CityName</h3>
-                <hr>
-            <div class="card-body pt-1">
-                <h5 class="text-center">@modelo.Title</h5>
-                    <table class="text-center mx-auto mb-3 table-borderless" style="width:80%">
-                    <tr>
-                        <td colspan="2">Temperatura</td>
-                    </tr>
-                    <tr>
-                        <td>Mínima</td>
-                        <td>Máxima</td>
-                    </tr>
-                    <tr>
-                        <td>@modelo.MinTemperature °C</td>
-                        <td>@modelo.MaxTemperature °C</td>
-                    </tr>
-                </table>
-
-                <p>Probabilidad de lluvia: @modelo.RainProbability %</p>
-                <p>Informacion adicional:<br> @modelo.Observation</p>
-                </div>
-
-                @if (IsAdmin)
-                {
-                    <div class="card-footer d-flex justify-content-end">
-                        <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-success">Editar</a>
-                    </div>
-                }
-        </div>
     </div>
 }
-</div>
+    <div class="col mt-4">
+        <h1 class="text-center mt-2">
+            @title
+        </h1>
+        <div class="card-deck d-flex flex-wrap justify-content-center">
+            @foreach (var modelo in Model){
+                <div class="card col-3 mx-2 my-2 rounded shadow car_forecast">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">
+                            @if (modelo.CityName == null)
+                            {
+                                @modelo.DateClima.ToString("dd-MM-yyyy")
+                            }else{
+                                @modelo.CityName
+                            }
+                        </h3>
+                        <hr>
+                    <div class="card-body pt-1">
+                        <h5 class="text-center">@modelo.Title</h5>
+                            <table class="text-center mx-auto mb-3 table-borderless" style="width:80%">
+                            <tr>
+                                <td colspan="2">Temperatura</td>
+                            </tr>
+                            <tr>
+                                <td>Mínima</td>
+                                <td>Máxima</td>
+                            </tr>
+                            <tr>
+                                <td>@modelo.MinTemperature °C</td>
+                                <td>@modelo.MaxTemperature °C</td>
+                            </tr>
+                        </table>
 
+                        <p>Probabilidad de lluvia: @modelo.RainProbability %</p>
+                        <p>Informacion adicional:<br> @modelo.Observation</p>
+                        </div>
+
+                        @if (IsAdmin)
+                        {
+                            <div class="card-footer d-flex justify-content-end bottom-0">
+                                <a href="@Url.Action("Edit", "Forecast", new { id = modelo.Id })" class="btn btn-success">Editar</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

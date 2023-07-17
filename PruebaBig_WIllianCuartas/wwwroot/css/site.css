@@ -19,7 +19,7 @@ body {
 }
 
 .car_forecast {
-    background-color: #aee789;
+    background-color: #aee789 
 }
 
 .car_forecast table {
@@ -29,4 +29,8 @@ body {
 .btn {
     background-color: #9bf603;
     color: black;
+}
+
+.tex {
+    font-size:2rem;
 }

@@ -77,8 +77,8 @@ CREATE OR ALTER PROCEDURE SP_GetForecast
     @Id int
 AS
 BEGIN
-    SELECT Id, Title, DateClima, MinTemperature, MaxTemperature, RainProbability, Observation, IdCity
-    FROM  forecasts WHERE Id = @Id
+    SELECT f.Id, f.Title, f.DateClima, f.MinTemperature, f.MaxTemperature, f.RainProbability, f.Observation, f.IdCity, c.Name AS 'CityName'
+    FROM  forecasts AS f, cities As c WHERE f.Id = @Id AND f.IdCity=c.Id
 END
 
 EXEC SP_GetForecast
@@ -144,7 +144,19 @@ EXEC SP_PostCity
     @Name = 'Ibague',
 	@Departament = 'Tolima'
 
-select * from cities
+
+CREATE OR ALTER PROCEDURE SP_GetCity
+    @Id int
+AS
+BEGIN
+    select * from cities where Id=@Id
+
+END
+
+EXEC SP_GetCity
+    @Id = 1
+
+select * from forecasts
 
 /*************************PROCEDIMIENTOS PARA USUARIOS***************************/
 /*Metodo get**/

@@ -20,7 +20,7 @@ namespace PruebaBig_WIllianCuartas.Apis
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<List<MCity>>> GetForecast()
+        public async Task<ActionResult<List<MCity>>> GetCity()
         {
             string _connectionString = cn.cadenaSQL();
 
@@ -31,10 +31,26 @@ namespace PruebaBig_WIllianCuartas.Apis
             return lista.ToList();
         }
 
-        [HttpPost]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MCity>> GetCity(int id)
+        {
 
+            string _connectionString = cn.cadenaSQL();
+            var db = new SqlConnection(_connectionString);
+
+            var Result = await db.QuerySingleAsync<MCity>("SP_GetCity", new
+            {
+                Id = id
+            }, commandType: CommandType.StoredProcedure);
+
+            return Result;
+
+
+        }
+
+        [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task PostForecast([FromBody] MCity parametros)
+        public async Task PostCity([FromBody] MCity parametros)
         {
 
             string _connectionString = cn.cadenaSQL();
@@ -47,6 +63,8 @@ namespace PruebaBig_WIllianCuartas.Apis
             }, commandType: CommandType.StoredProcedure);
 
         }
+
+        
 
     }
 }
