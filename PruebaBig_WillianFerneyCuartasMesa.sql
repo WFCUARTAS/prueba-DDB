@@ -1,6 +1,64 @@
-/*use PruebaBig_WillianFerneyCuartasMesa
+Create database PruebaBig_WillianFerneyCuartasMesa
+GO
+use PruebaBig_WillianFerneyCuartasMesa
+GO
+
+
+create table users(
+	Id int IDENTITY(1,1) PRIMARY KEY,
+	Email varchar(50) not null unique,
+	Password VARBINARY(128) not null,
+	FullName varchar(50) not null,
+	UserRol varchar(10) not null
+)
+GO
+
+create table cities(
+	Id int IDENTITY(1,1) PRIMARY KEY,
+	Name varchar(50),
+	Departament varchar(50)
+)
+GO
+create table forecasts(
+	Id int IDENTITY(1,1) PRIMARY KEY,
+	Title varchar(50),
+	DateClima date not null,
+	MinTemperature int not null,
+	MaxTemperature int not null,
+	RainProbability int not null,
+	Observation varchar(200),
+	IdCity int,
+	IdUserChage int not null,
+	DateChange datetime not null
+)
+
+GO
+
+ALTER TABLE forecasts
+ADD FOREIGN KEY (IdCity) REFERENCES cities(Id);
+GO
+
+ALTER TABLE forecasts
+ADD CONSTRAINT UniqueCitiDate UNIQUE (DateClima,IdCity);
+GO
+
+insert into cities values('Bogotá','Cundinamarca'),('Medellin','Antioquia'),('Cali','Valle del cauca'),('Pasto','Nariño');
+GO
+insert into users (Email,Password,FullName,UserRol) values ('admin@mail.com',HASHBYTES('SHA2_512', '12345'),'Administrador','Admin'),('user1@mail.com',HASHBYTES('SHA2_512', '6789'),'Administrador','User');
+GO
+
+insert into forecasts (Title,DateClima,MinTemperature,MaxTemperature,RainProbability,Observation,IdCity,IdUserChage,DateChange)
+values ('lluvia','2023-07-17',10,15,20,'lluvias leves',1,1,GETDATE()),
+('soleado','2023-07-17',20,30,15,'dia de pisscina',2,1,GETDATE()),
+('nublado','2023-07-17',15,20,50,'',3,1,GETDATE()),
+('lluvia fuerta','2023-07-17',10,25,60,'usa paraguas',4,1,GETDATE());
+
+GO
+
+/*
+procedimientos
 */
-use prueba_Back
+
 go
 CREATE OR ALTER PROCEDURE SP_PostForecast
     @Title VARCHAR(50),
@@ -17,19 +75,6 @@ BEGIN
     VALUES (@Title, @DateClima, @MinTemperature, @MaxTemperature, @RainProbability, @Observation, @IdCity, @IdUserChange, GETDATE())
 END
 GO
-/*
-
-EXEC SP_PostForecast
-    @Title = 'Título del pronóstico citi2',
-    @DateClima = '2023-07-20',
-    @MinTemperature = 30,
-    @MaxTemperature = 40,
-    @RainProbability = 0.2,
-    @Observation = 'Observaciones del clima',
-    @IdCity = 1,
-    @IdUserChange = 123
-
-*/
 
 
 /* procedimiento editar clima */
@@ -59,18 +104,7 @@ BEGIN
     WHERE Id = @Id
 END
 GO
-/*
-EXEC SP_PutForecast
-    @id=1,
-    @Title = 'Título del pronóstico edit',
-    @DateClima = '2023-07-16',
-    @MinTemperature = 20,
-    @MaxTemperature = 30,
-    @RainProbability = 0.3,
-    @Observation = 'Observaciones del clima',
-    @IdCity = 2,
-    @IdUserChange = 122
-	*/
+
 
 /*CONSULTAR POR ID */
 CREATE OR ALTER PROCEDURE SP_GetForecast
@@ -81,11 +115,9 @@ BEGIN
     FROM  forecasts AS f, cities As c WHERE f.Id = @Id AND f.IdCity=c.Id
 END
 GO
-/*
-EXEC SP_GetForecast
-    @Id=1
-	*/
-/****************************CONSULTAS**********************/
+
+
+-------CONSULTAS-----
 
 /*CONSULTAR POR FECHA */
 CREATE OR ALTER PROCEDURE SP_ListByDateForecast
@@ -96,10 +128,6 @@ BEGIN
     FROM  forecasts AS f, cities As c WHERE f.IdCity=c.Id AND DateClima = @DateClima
 END
 GO
-/*
-EXEC SP_ListDateForecast
-    @DateClima = '2023-07-16'
-*/
 
 	
 /*CONSULTAR POR Ciudad */
@@ -111,10 +139,6 @@ BEGIN
     FROM  forecasts WHERE IdCity = @IdCity AND DateClima>= CAST(GETDATE() AS DATE) ORDER BY DateClima 
 END
 GO
-/*
-EXEC SP_ListCityForecast
-    @IdCity = 1
-	*/
 
 
 /*CONSULTAR POR Ciudad y fecha */
@@ -127,11 +151,7 @@ BEGIN
     FROM  forecasts AS f, cities As c WHERE f.IdCity=c.Id AND IdCity = @IdCity AND DateClima = @DateClima
 END
 GO
-/*
-EXEC SP_ListCityDateForecast
-    @IdCity = 1,
-	@DateClima = '2023-07-15'
-	*/
+
 
 /*************************PROCEDIMIENTOS PARA LA CIUDAD***************************/
 
@@ -144,11 +164,7 @@ BEGIN
     VALUES (@Name , @Departament)
 END
 GO
-/*
-EXEC SP_PostCity
-    @Name = 'Ibague',
-	@Departament = 'Tolima'
-*/
+
 
 CREATE OR ALTER PROCEDURE SP_GetCity
     @Id int
@@ -157,10 +173,7 @@ BEGIN
     select * from cities where Id=@Id
 END
 GO
-/*
-EXEC SP_GetCity
-    @Id = 1
-*/
+
 
 
 /*************************PROCEDIMIENTOS PARA USUARIOS***************************/
@@ -174,10 +187,6 @@ BEGIN
         WHERE Email = @Email;
 END
 GO
-/*
-EXEC SP_GetUser
-    @Email = 'admin@mail.com'
-	*/
 
 
 /*Metodo post*/
@@ -192,13 +201,7 @@ BEGIN
     VALUES (@Email, HASHBYTES('SHA2_512', @Password), @FullName, @UserRol)
 END
 GO
-/*
-EXEC SP_PostUser
-    @Email = 'user1@mail.com',
-    @Password = '6789',
-	@FullName = 'Ferney Mesa',
-	@UserRol = 'User' 
-	*/
+
 
 /*Procedimiento para validar usuario*/
 CREATE OR ALTER PROCEDURE SP_ValidateUser
@@ -228,10 +231,6 @@ BEGIN
     END
 END
 GO
-/*
-EXEC SP_ValidateUser
-    @Email = 'admin@mail.com',
-    @Password = '12345'
-*/
+
 
 	 

@@ -95,7 +95,7 @@ namespace PruebaBig_WIllianCuartas.Apis
 
             var db = new SqlConnection(_connectionString);
 
-            var lista = await db.QueryAsync<MForecast>("SP_ListDateForecast", new
+            var lista = await db.QueryAsync<MForecast>("SP_ListByDateForecast", new
             {
                 DateClima = Date
 
