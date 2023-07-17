@@ -24,6 +24,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [AllowAnonymous]
         public async Task<ActionResult<MForecast>> GetForecast(int id)
         {
+            ///retorna unpronostico buscandolo por el ID
             string _connectionString = cn.cadenaSQL();
 
             var db = new SqlConnection(_connectionString);
@@ -41,6 +42,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Authorize(Roles = "Admin")]
         public async Task PostForecast([FromBody] MForecast parametros)
         {
+            //registra un nuevo pronostico
             var identity = User.Identity as ClaimsIdentity;
             int IdUser = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
@@ -65,6 +67,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Authorize(Roles = "Admin")]
         public async Task PutForecast(int id,[FromBody] MForecast parametros)
         {
+            //edita un pronostico existente
             var identity = User.Identity as ClaimsIdentity;
             int IdUser = int.Parse(identity.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
@@ -91,6 +94,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [AllowAnonymous]
         public async Task<ActionResult<List<MForecast>>> GetDateForecast(DateTime Date)
         {
+            ///retorna los pronosticos de una fecha que se recibe como parametro
             string _connectionString = cn.cadenaSQL();
 
             var db = new SqlConnection(_connectionString);
@@ -108,6 +112,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Route("GetByCity/{id}")]
         public async Task<ActionResult<List<MForecast>>> GetCityForecast(int id)
         {
+            ///retorna los pronosticos de una ciudad, recibe como parametro en id de la ciudad
             string _connectionString = cn.cadenaSQL();
 
             var db = new SqlConnection(_connectionString);
@@ -126,6 +131,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Route("GetByCityDate")]
         public async Task<ActionResult<MForecast>> GetCityDateForecast([FromBody] MForecast Forecast)
         {
+            ///retorna  el pronostico para una fecha y ciudad espesifico
             string _connectionString = cn.cadenaSQL();
 
             var db = new SqlConnection(_connectionString);

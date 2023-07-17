@@ -26,7 +26,11 @@ namespace PruebaBig_WIllianCuartas.Apis
         [HttpPost]
         [Route("Validate")]
         public async Task<IActionResult> ValidateAsync([FromBody] MUser User)
-        {
+        { 
+            /////recibe como parametro el email y la contraseña de usuario
+            ///valida que correspondan a un usuario del sistema
+            ///retorna el toquen de acceso y crea la sesion del usuario
+
             string _connectionString = cn.cadenaSQL();
             var db = new SqlConnection(_connectionString);
 

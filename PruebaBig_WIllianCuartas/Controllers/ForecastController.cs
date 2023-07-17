@@ -79,7 +79,7 @@ namespace PruebaBig_WIllianCuartas.Controllers
             var DataCity = JsonConvert.DeserializeObject<List<MCity>>(jsonContentCity);
 
 
-            ViewBag.title = "Clima de" + DateTime.Now.ToString("dd 'de' MMMM 'de' yyyy");
+            ViewBag.title = "Clima del " + DateTime.Now.ToString("dd 'de' MMMM 'de' yyyy");
             ViewBag.DateNow = DateTime.Now;
             ViewBag.IsAdmin = IsAdmin;
             ViewBag.City = DataCity;

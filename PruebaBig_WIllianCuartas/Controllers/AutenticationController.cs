@@ -41,6 +41,7 @@ namespace PruebaBig_WIllianCuartas.Controllers
         [HttpPost]
         public async Task<IActionResult> login(MUser User)
         {
+            /////inicia la sesion con los datos ingresados por el usuario solicita el token al api rest
             var parametros = new
             {
                 Email = User.Email,
@@ -92,6 +93,7 @@ namespace PruebaBig_WIllianCuartas.Controllers
 
         public async Task<IActionResult> exit()
         {
+            ///finalixa la sesion.
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("index", "Forecast");
         }

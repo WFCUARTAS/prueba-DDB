@@ -22,6 +22,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [AllowAnonymous]
         public async Task<ActionResult<List<MCity>>> GetCity()
         {
+            ////retorna todas las ciudades registradas
             string _connectionString = cn.cadenaSQL();
 
             var db = new SqlConnection(_connectionString);
@@ -34,6 +35,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [HttpGet("{id}")]
         public async Task<ActionResult<MCity>> GetCity(int id)
         {
+            //retorna la ciudad corrspondiente al ID que se recibe 
 
             string _connectionString = cn.cadenaSQL();
             var db = new SqlConnection(_connectionString);
@@ -52,6 +54,7 @@ namespace PruebaBig_WIllianCuartas.Apis
         [Authorize(Roles = "Admin")]
         public async Task PostCity([FromBody] MCity parametros)
         {
+            ///registra una nueva ciudad
 
             string _connectionString = cn.cadenaSQL();
             var db = new SqlConnection(_connectionString);
