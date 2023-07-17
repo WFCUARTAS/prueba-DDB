@@ -53,12 +53,15 @@ namespace PruebaBig_WIllianCuartas.Controllers
                     }
                 }
             }
-             
 
             HttpResponseMessage responseForecast = await httpClient.GetAsync(ApiUrl+ "api/Forecast/GetByDate/"+ DateTime.Now.ToString("yyyy-MM-dd"));
             if (responseForecast.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return RedirectToAction("exit", "Autentication");
+            }else if (responseForecast.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+            {
+                ViewBag.message = "error de conexion con el servidor";
+                return View("Error");
             }
 
             string jsonContentForecast = await responseForecast.Content.ReadAsStringAsync();
